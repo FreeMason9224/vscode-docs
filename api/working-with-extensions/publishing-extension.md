@@ -1,7 +1,7 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: 7EA90618-43A3-4873-A9B5-61CC131CE4EE
-DateApproved: 07/03/2024
+DateApproved: 08/01/2024
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: Learn how to publish Visual Studio Code extensions to the public Marketplace and share them with other developers.
@@ -522,3 +522,7 @@ The same rule applies for the [display name](/api/references/extension-manifest)
 ### What package managers are supported?
 
 You can either use npm or yarn v1 to manage your extension's dependencies.
+
+### I need help with my VS Marketplace account or support in publishing an extension?
+
+You can reach out to the VS Marketplace support team by signing in at [Manage Publishers & Extensions](https://marketplace.visualstudio.com/manage) and clicking on the ‘Contact Microsoft’ link at the top right.

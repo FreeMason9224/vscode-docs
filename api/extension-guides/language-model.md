@@ -1,7 +1,7 @@
 ---
 # DO NOT TOUCH — Managed by doc writer
 ContentId: 9bdc3d4e-e6ba-43d3-bd09-2e127cb63ce7
-DateApproved: 07/03/2024
+DateApproved: 08/01/2024
 
 # Summarize the whole topic in less than 300 characters for SEO purpose
 MetaDescription: A guide to adding AI-powered features to a VS Code extension by using language models and natural language understanding.
@@ -75,7 +75,7 @@ Once you've built the prompt for the language model, you first select the langua
 
 To select the language model, you can specify the following properties: `vendor`, `id`, `family`, or `version`. Use these properties to either broadly match all models of a given vendor or family, or select one specific model by its ID. Learn more about these properties in the [API reference](/api/references/vscode-api#LanguageModelChat).
 
-> **Note**: Currently, only `gpt-3.5-turbo` and `gpt-4` are supported for the language model family. We expect that the list of supported models will grow over time.
+> **Note**: Currently, `gpt-4o`, `gpt-4` and `gpt-3.5-turbo` are supported for the language model family. We expect that the list of supported models will grow over time.
 
 If there are no models that match the specified criteria, the `selectChatModels` method returns an empty array. Your extension must appropriately handle this case.
 
@@ -102,7 +102,7 @@ The following code snippet shows how to make a language model request:
 
 ```typescript
 try {
-    const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-3.5-turbo' });
+    const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-4o' });
     const request = model.sendRequest(craftedPrompt, {}, token);
 } catch (err) {
     // Making the chat request might fail because
@@ -135,7 +135,7 @@ The following code snippet shows how an extension can register a command, which 
  vscode.commands.registerTextEditorCommand('cat.namesInEditor', async (textEditor: vscode.TextEditor) => {
     // Replace all variables in active editor with cat names and words
 
-    const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-3.5-turbo' });
+    const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot', family: 'gpt-4o' });
     let chatResponse: vscode.LanguageModelChatResponse | undefined;
 
     const text = textEditor.document.getText();
@@ -192,9 +192,11 @@ We don't expect specific models to stay supported forever. When you reference a 
 
 ### Choosing the appropriate model
 
-Extension authors can choose which model is the most appropriate for their extension. We recommend starting with less powerful models, such as `gpt-3.5-turbo`, because they are faster and might allow for a smoother user experience. You might use more powerful but slower models, such as  `gpt-4`, for complex tasks and only after the faster models prove to be inadequate.
-
-> **Note**: both `gpt-3.5-turbo` and `gpt-4` models have the limit of `4K` tokens. These limits will be expanded as we learn more how extensions are using the language models.
+Extension authors can choose which model is the most appropriate for their extension. We recommend using `gpt-4o` for its performance and quality. In addition, `gpt-3.5-turbo`, and `gpt-4` are also available. To get a full list of available models, you can use this code snippet:
+```typescript
+const allModels = await vscode.lm.selectChatModels(MODEL_SELECTOR);
+```
+> **Note**: The recommended GPT-4o model has a limit of `6K` tokens. The returned model object from the `selectChatModels` call has a `maxInputTokens` attribute that shows the token limit. These limits will be expanded as we learn more about how extensions are using the language models.
 
 ### Rate limiting
 
@@ -215,6 +217,7 @@ Once you have created your AI extension, you can publish your extension to the V
 - Before publishing to the VS Marketplace we recommend that you read the [Microsoft AI tools and practices guidelines](https://www.microsoft.com/en-us/ai/tools-practices). These guidelines provide best practices for the responsible development and use of AI technologies.
 - By publishing to the VS Marketplace, your extension is adhering to the [GitHub Copilot extensibility acceptable development and use policy](https://docs.github.com/en/early-access/copilot/github-copilot-extensibility-platform-partnership-plugin-acceptable-development-and-use-policy).
 - Update the attributes in the `package.json` to make it easy for users to find your extension. Add "AI" to the `categories` field in your `package.json`. If your extension contributes a Chat Participant, add "Chat" as well.
+- If your extension already contributes functionality other than using the Language Model API, we recommend that you do not introduce an extension dependency on GitHub Copilot in the [extension manifest](/api/references/extension-manifest). This ensures that extension users that do not use GitHub Copilot can use the non language model functionality without having to install GitHub Copilot. Make sure to have appropriate error handling when accessing language models for this case.
 - Upload to the Marketplace as described in [Publishing Extension](https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
 
 ## Related content

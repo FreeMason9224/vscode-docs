@@ -4,7 +4,7 @@ Area: copilot
 TOCTitle: Getting Started Tutorial
 ContentId: 37fd3bd2-4209-49f6-bec5-c544d6b1b289
 PageTitle: GitHub Copilot getting started
-DateApproved: 07/03/2024
+DateApproved: 08/01/2024
 MetaDescription: Get started with GitHub Copilot in Visual Studio Code and create your first AI-powered suggestions in the editor.
 MetaSocialImage: images/shared/github-copilot-social.png
 ---
@@ -141,8 +141,6 @@ One such place is the Copilot coding actions in the editor, whenever there you h
 1. Select the sparkle to view the Copilot code actions, and then select **Fix using Copilot**.
 
     ![Screenshot of VS Code editor, showing the Copilot code actions, hihglighting `Fix using Copilot`.](./images/getting-started/copilot-code-action-fix.png)
-
-    Notice that the second argument gets a red squiggle because the method only accepts one argument.
 
 1. Notice that the Copilot inline chat comes up, prepopulated with the error message, and a solution to fix the problem.
 
